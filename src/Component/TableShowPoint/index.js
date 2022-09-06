@@ -31,10 +31,10 @@ export default function TableShowPoint() {
                             return <tr key={"row" + index}>
                                 {item.map((it, i) => {
                                     return <th key={"collumn" + i}
-                                    //blue: sbd
-                                    //yellow : duoi trung bình
-                                    //green: tren trung bình
-                                        style={{ color: i > 0 ? (it > 5) ? "green" : "red" : "blue" }} scope="col"
+                                        //blue: sbd
+                                        //yellow : duoi trung bình
+                                        //green: tren trung bình
+                                        style={{ color: i > 0 ? (it >= 5) ? "green" : (it > 1 && it < 5) ? "yellow" : "red" : "blue" }} scope="col"
                                         className="table-collumn">
                                         {it} {i > 0 && it !== '' ?
                                             <i className={`fas ${(it > 5) ? "green fa-caret-up" :

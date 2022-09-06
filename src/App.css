@@ -92,6 +92,9 @@
 .red {
   color: red;
 }
+.yellow {
+  color: rgb(242, 252, 45);
+}
 
 .square-loading {
   width: 100px;

@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/deploy-github/static/css/main.87d1f3a2.css",
-    "main.js": "/deploy-github/static/js/main.852f0710.js",
-    "static/js/787.6b7b70a2.chunk.js": "/deploy-github/static/js/787.6b7b70a2.chunk.js",
-    "static/media/diem_thi_thpt_2022.csv": "/deploy-github/static/media/diem_thi_thpt_2022.7308f0d5d06894a66302.csv",
-    "index.html": "/deploy-github/index.html",
-    "main.87d1f3a2.css.map": "/deploy-github/static/css/main.87d1f3a2.css.map",
-    "main.852f0710.js.map": "/deploy-github/static/js/main.852f0710.js.map",
-    "787.6b7b70a2.chunk.js.map": "/deploy-github/static/js/787.6b7b70a2.chunk.js.map"
+    "main.css": "/diemthi-thptqg2022/static/css/main.87d1f3a2.css",
+    "main.js": "/diemthi-thptqg2022/static/js/main.17a16910.js",
+    "static/js/787.6b7b70a2.chunk.js": "/diemthi-thptqg2022/static/js/787.6b7b70a2.chunk.js",
+    "static/media/diem_thi_thpt_2022.csv": "/diemthi-thptqg2022/static/media/diem_thi_thpt_2022.7308f0d5d06894a66302.csv",
+    "index.html": "/diemthi-thptqg2022/index.html",
+    "main.87d1f3a2.css.map": "/diemthi-thptqg2022/static/css/main.87d1f3a2.css.map",
+    "main.17a16910.js.map": "/diemthi-thptqg2022/static/js/main.17a16910.js.map",
+    "787.6b7b70a2.chunk.js.map": "/diemthi-thptqg2022/static/js/787.6b7b70a2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.87d1f3a2.css",
-    "static/js/main.852f0710.js"
+    "static/js/main.17a16910.js"
   ]
 }

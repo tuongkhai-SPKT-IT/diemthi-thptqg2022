@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {  pagingClick } from '../Redux/Actions/Home.Action';
+import { pagingClick } from '../Redux/Actions/Home.Action';
 import ReactPaginate from 'react-paginate';
 export default function BottomPaging() {
     const homeState = useSelector((state) => state.HomePage);
@@ -9,7 +9,7 @@ export default function BottomPaging() {
         return <></>
     const handlePageClick = (event) => {
         dispatch(pagingClick(event.selected, event.selected + 1))
-
+        window.scrollTo(0, 0)
         console.log(
             `User requested page number ${event.selected + 1}`
         );

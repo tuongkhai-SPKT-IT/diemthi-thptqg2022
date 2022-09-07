@@ -13,11 +13,46 @@ export default function TableShowPoint() {
         // if (Object.keys(hom  eState).length === 0)
         dispatch(firstShowData())
     }, [])
+    const keys = [
+        { keyCode: 'AltLeft', isTriggered: false },
+        { keyCode: 'ControlLeft', isTriggered: false },
+    ];
 
+    window.addEventListener('keydown', (e) => {
+        keys.forEach((obj) => {
+            if (obj.keyCode === e.code) {
+                obj.isTriggered = true;
+            }
+        });
+        const searchFocus = document.getElementById('search-focus');
+        const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+
+        if (shortcutTriggered) {
+            searchFocus.focus();
+        }
+    });
+
+    window.addEventListener('keyup', (e) => {
+        keys.forEach((obj) => {
+            if (obj.keyCode === e.code) {
+                obj.isTriggered = false;
+            }
+        });
+    });
     if (Object.keys(homeState).length > 0)
         return (
             <div>
-                <h2 >Điểm thi THPTQG năm {"2022"}</h2>
+                <div style={{ display: 'flex', flexDirection: "row" }}>
+                    <h2 style={{ padding: "20px", display: 'flex', flex: 1 }}>Điểm thi THPTQG năm {"2022"}</h2>
+                    <div className="search-block">
+                        <form className="search">
+                            <div className="search__wrapper">
+                                <input id='search-focus' type="text" name="" placeholder="Search for..." className="search__field" />
+                                <button type="submit" className="fa fa-search search__icon"></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <table className="table">
                     <thead>
                         <tr>
@@ -37,8 +72,8 @@ export default function TableShowPoint() {
                                         style={{ color: i > 0 ? (it >= 5) ? "green" : (it > 1 && it < 5) ? "yellow" : "red" : "blue" }} scope="col"
                                         className="table-collumn">
                                         {it} {i > 0 && it !== '' ?
-                                            <i className={`fas ${(it > 5) ? "green fa-caret-up" :
-                                                it > 1 ? "red fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
+                                            <i className={`fas ${(it >= 5) ? "green fa-caret-up" :
+                                                it > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
                                     </th>
                                 })}
                             </tr>

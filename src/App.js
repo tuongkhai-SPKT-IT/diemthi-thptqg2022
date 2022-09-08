@@ -9,12 +9,13 @@ import {
   useParam
 } from "react-router-dom";
 function App() {
+
   return (
     <StoreProvider store={store}>
       <Router>
         <div className="App">
           <TableShowPoint />
-          <BottomPaging />
+          < BottomPaging />
         </div>
       </Router>
     </StoreProvider>

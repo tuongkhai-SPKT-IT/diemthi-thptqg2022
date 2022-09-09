@@ -34,7 +34,7 @@ export default function TableShowPoint() {
                 <div style={{ display: 'flex', flexDirection: "row" }}>
                     <h2 style={{ padding: "20px", display: 'flex', flex: 1 }}>Điểm thi THPTQG năm {"2022"}</h2>
                     <div className="search-block">
-                        <form className="search">
+                        <form className="search" onSubmit={(e) => e.preventDefault()}>
                             <div className="search__wrapper">
                                 <input
                                     type="number"
@@ -57,25 +57,25 @@ export default function TableShowPoint() {
                         </tr>
                     </thead>
                     <tbody>
-                        {homeState.dataShow.map((item, index) => {
-                            if (searchTerm.length < 8)
-                                return <tr key={"row" + index}>
-                                    {
-                                        item.map((it, i) => {
-                                            return <th key={"collumn" + i}
-                                                //blue: sbd
-                                                //yellow : duoi trung bình
-                                                //green: tren trung bình
-                                                style={{ color: i > 0 ? (it >= 5) ? "green" : (it > 1 && it < 5) ? "yellow" : "red" : "blue" }} scope="col"
-                                                className="table-collumn">
-                                                {it} {i > 0 && it !== '' ?
-                                                    <i className={`fas ${(it >= 5) ? "green fa-caret-up" :
-                                                        it > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
-                                            </th>
-                                        })}
-                                </tr>
-                            else {
-                                console.log(1)
+
+                        {searchTerm.length < 8 && searchTerm > 0 && typingTimeOutRef.current === null ? homeState.dataShow.map((item, index) => {
+                            return <tr key={"row" + index}>
+                                {
+                                    item.map((it, i) => {
+                                        return <th key={"collumn" + i}
+                                            //blue: sbd
+                                            //yellow : duoi trung bình
+                                            //green: tren trung bình
+                                            style={{ color: i > 0 ? (it >= 5) ? "green" : (it > 1 && it < 5) ? "yellow" : "red" : "blue" }} scope="col"
+                                            className="table-collumn">
+                                            {it} {i > 0 && it !== '' ?
+                                                <i className={`fas ${(it >= 5) ? "green fa-caret-up" :
+                                                    it > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
+                                        </th>
+                                    })}
+                            </tr>
+                        }) : <tr>
+                            {homeState.dataShow.map((item, index) => {
                                 return <th key={"collumn" + index}
                                     //blue: sbd
                                     //yellow : duoi trung bình
@@ -86,9 +86,8 @@ export default function TableShowPoint() {
                                         <i className={`fas ${(item >= 5) ? "green fa-caret-up" :
                                             item > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
                                 </th>
-
-                            }
-                        })}
+                            })}
+                        </tr>}
                     </tbody>
                 </table>
             </div>

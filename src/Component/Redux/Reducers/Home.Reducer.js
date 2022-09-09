@@ -42,13 +42,22 @@ const HomeReducer = (state = initState, action) => {
         const index = columnCSV.sbd.findIndex((e) => e === searchTerm)
         temp = dataCSV[index]
       }
-      if (searchTerm.length === 0) temp = dataCSV.slice(0, 50)
+      if (searchTerm.length < 8)
+        if (searchTerm.length === 0) temp = dataCSV.slice(0, 50)
+        else
+          dataCSV.map(e => {
+            if (e.contains(searchTerm)) {
+              console.log(e);
+              temp.push(e)
+            }
+          })
 
-      // console.log(temp)
+      console.log(temp)
 
       return { ...state, dataShow: temp }
       // return { ...state, err_code: "", srcData: data };
     }
+
     ///case failed
     case types.Change_Page_Failed: {
       const { err } = action;

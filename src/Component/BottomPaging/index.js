@@ -2,10 +2,11 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { pagingClick } from '../Redux/Actions/Home.Action';
 import ReactPaginate from 'react-paginate';
+import { ERR_404 } from '../Redux/Constants.Errors_code';
 export default function BottomPaging() {
     const homeState = useSelector((state) => state.HomePage);
     const dispatch = useDispatch()
-    if (!Object.keys(homeState).length > 0)
+    if (!Object.keys(homeState).length > 0 || homeState.err_code === ERR_404)
         return <></>
     const handlePageClick = (event) => {
         dispatch(pagingClick(event.selected, event.selected + 1))

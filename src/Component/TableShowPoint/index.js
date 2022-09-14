@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import ErrorNotFound from "../ErrorBoundary";
 import { filterData, firstShowData } from "../Redux/Actions/Home.Action";
+import { ERR_404 } from "../Redux/Constants.Errors_code";
 
 export default function TableShowPoint() {
     const homeState = useSelector((state) => state.HomePage);
     const typingTimeOutRef = useRef(null)
-    const [searchTerm, setSearchTerm] = useState('')
+    const [searchTerm, setsearchTerm] = useState('')
+    const searchValue = useRef('')
     const dispatch = useDispatch()
     useEffect(() => {
         // if (Object.keys(hom  eState).length === 0)
@@ -13,21 +16,65 @@ export default function TableShowPoint() {
     }, [])
 
     const handleFilterChange = (newFilter) => {
+        console.log('ua hong vao hay sao ')
         dispatch(filterData(newFilter))
     }
     const searchSBD = (e) => {
         const value = e.target.value
-        setSearchTerm(value);
+        setsearchTerm(value);
         if (!handleFilterChange) return;
         if (typingTimeOutRef.current) {
             clearTimeout(typingTimeOutRef.current)
         }
         typingTimeOutRef.current = setTimeout(() => {
+            searchValue.current = value
             handleFilterChange(value)
         }, 450);
 
     }
-    // console.log()
+
+    const rendermainTable = () => {
+        // {/* {searchValue.current.length < 8 && searchValue.current > 0 && typingTimeOutRef.current === null ? */ }
+        if (searchValue.current.length === 8)
+            return <tr>
+                {homeState.dataShow.map((item, index) => {
+                    return <th key={"collumn" + index}
+                        //blue: sbd
+                        //yellow : duoi trung bình
+                        //green: tren trung bình
+                        style={{ color: index > 0 ? (item >= 5) ? "green" : (item > 1 && item < 5) ? "yellow" : "red" : "blue" }} scope="col"
+                        className="table-collumn">
+                        {item} {index > 0 && item !== '' ?
+                            <i className={`fas ${(item >= 5) ? "green fa-caret-up" :
+                                item > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
+                    </th>
+                })}
+            </tr>
+        if (searchValue.current.length >= 0)
+            return homeState.dataShow.map((item, index) => {
+                return <tr key={"row" + index}>
+                    {
+                        item.map((it, i) => {
+                            return <th key={"collumn" + i}
+                                //blue: sbd
+                                //yellow : duoi trung bình
+                                //green: tren trung bình
+                                style={{ color: i > 0 ? (it >= 5) ? "green" : (it > 1 && it < 5) ? "yellow" : "red" : "blue" }} scope="col"
+                                className="table-collumn">
+                                {it} {i > 0 && it !== '' ?
+                                    <i className={`fas ${(it >= 5) ? "green fa-caret-up" :
+                                        it > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
+                            </th>
+                        })}
+                </tr>
+            })
+
+        else return <></>
+
+    }
+    if (homeState.err_code === ERR_404) {
+        return <ErrorNotFound />
+    }
     if (Object.keys(homeState).length > 0)
         return (
             <div>
@@ -57,45 +104,13 @@ export default function TableShowPoint() {
                         </tr>
                     </thead>
                     <tbody>
-
-                        {searchTerm.length < 8 && searchTerm > 0 && typingTimeOutRef.current === null ? homeState.dataShow.map((item, index) => {
-                            return <tr key={"row" + index}>
-                                {
-                                    item.map((it, i) => {
-                                        return <th key={"collumn" + i}
-                                            //blue: sbd
-                                            //yellow : duoi trung bình
-                                            //green: tren trung bình
-                                            style={{ color: i > 0 ? (it >= 5) ? "green" : (it > 1 && it < 5) ? "yellow" : "red" : "blue" }} scope="col"
-                                            className="table-collumn">
-                                            {it} {i > 0 && it !== '' ?
-                                                <i className={`fas ${(it >= 5) ? "green fa-caret-up" :
-                                                    it > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
-                                        </th>
-                                    })}
-                            </tr>
-                        }) : <tr>
-                            {homeState.dataShow.map((item, index) => {
-                                return <th key={"collumn" + index}
-                                    //blue: sbd
-                                    //yellow : duoi trung bình
-                                    //green: tren trung bình
-                                    style={{ color: index > 0 ? (item >= 5) ? "green" : (item > 1 && item < 5) ? "yellow" : "red" : "blue" }} scope="col"
-                                    className="table-collumn">
-                                    {item} {index > 0 && item !== '' ?
-                                        <i className={`fas ${(item >= 5) ? "green fa-caret-up" :
-                                            item > 1 ? "yellow fa-caret-down" : "fa-exclamation-triangle red"}`}></i> : <></>}
-                                </th>
-                            })}
-                        </tr>}
+                        {rendermainTable()}
                     </tbody>
-                </table>
-            </div>
+                </table >
+            </div >
         );
 
     return <div style={{ position: "absolute", left: "50%", top: "calc(50% - 100px)" }}>
-        <div className="square-loading">
-        </div>
+        <div className="square-loading" />
     </div>
 }
-

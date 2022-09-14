@@ -1,6 +1,7 @@
 import * as types from "../Constants.ActionType";
 import file from '../../diem_thi_thpt_2022.csv'
 import Papa from 'papaparse';
+import { ERR_404 } from "../Constants.Errors_code";
 var initState = {};
 
 const HomeReducer = (state = initState, action) => {
@@ -33,29 +34,36 @@ const HomeReducer = (state = initState, action) => {
     case types.Search_SBD: {
       const { searchTerm } = action;
       const { columnCSV, dataCSV } = state
-
+      console.log(searchTerm.length)
       let temp = []
-      if (searchTerm.length > 8) {
-        return { ...state, dataShow: [] }
-      }
       if (searchTerm.length === 8) {
         const index = columnCSV.sbd.findIndex((e) => e === searchTerm)
-        temp = dataCSV[index]
-      }
-      if (searchTerm.length < 8)
-        if (searchTerm.length === 0) temp = dataCSV.slice(0, 50)
+        console.log(searchTerm, index)
+        if (index >= 0)
+          temp = dataCSV[index]
         else
+          return { ...state, err_code: ERR_404 };
+      }
+      if (searchTerm.length < 8) {
+        if (searchTerm.length <= 0) temp = dataCSV.slice(0, 50)
+        else {
+          const test = []
           dataCSV.map(e => {
-            if (e.contains(searchTerm)) {
-              console.log(e);
-              temp.push(e)
+            // console.log(e[0].includes(searchTerm));
+            if (e[0].includes(searchTerm)) {
+              console.log('hello')
+              test.push(e)
             }
           })
-
-      console.log(temp)
-
+          console.log(test)
+          temp = [...test];
+          console.log(temp, test)
+        }
+      }
+      if (temp.length === 0) {
+        return { ...state, err_code: ERR_404 };
+      }
       return { ...state, dataShow: temp }
-      // return { ...state, err_code: "", srcData: data };
     }
 
     ///case failed
